@@ -1,0 +1,8 @@
+    var createScene = async function () {
+    const scene = new BABYLON.Scene(engine);
+
+    const assetArrayBuffer = await BABYLON.Tools.LoadFileAsync("scenes/BoomBox.glb", true);
+    const assetBlob = new Blob([assetArrayBuffer]);
+    const assetUrl = URL.createObjectURL(assetBlob);
+  
+    scene.createDefaultCameraOrLight(true, true, true);
