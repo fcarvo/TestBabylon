@@ -6,8 +6,8 @@
 --------/////////////////////////--------
 
 fn update_log new_info=(
-    local log_file = undefined
-    log_path = @"C:/teste/teste_babylon/64ac3a0ea08cef00086a7dba_MAXSCRIPT_SCENE_JOB_1689020845/log_file.txt"
+    --local log_file = undefined
+    --log_path = @"C:\Decora\TestBabylon\log_file_mxs.txt" ESTA SENDO CRIADA NO PYTHON
     if doesFileExist log_path then (
         log_file = openfile log_path mode: "r+"
     )
@@ -1273,10 +1273,26 @@ fn export_glb nd =
     
 )
 
-fn update_bake_materials = (
+fn update_bake_materials_and_export = (
     update_log "update_bake_materials"
 	setGroupOpen $DecoraOptimizedProdutcs true
+
+    local glb_data_path = pathConfig.appendPath (pathConfig.appendPath maxfilepath "glbs") "glb_data_filec.txt"
+	local glb_data_file = undefined
+
+	if not doesFileExist glb_data_path then (
+		glb_data_file = createfile glb_data_path
+	)
+	else (
+		glb_data_file = openFile glb_data_path
+	)
+
 	for nd = 1 to $DecoraOptimizedProdutcs.children.count do (
+		obj =  $DecoraOptimizedProdutcs.children[nd]
+	    obj_info = obj.name + ":" + (obj.pos as string) + ":" + (obj.rotation as string) + "\n"
+
+        format obj_info to:glb_data_file
+
 		print $DecoraOptimizedProdutcs.children[nd]
 		update_log $DecoraOptimizedProdutcs.children[nd].name
 		create_set_physical_material $DecoraOptimizedProdutcs.children[nd]
@@ -1285,7 +1301,9 @@ fn update_bake_materials = (
 		
 		update_log ("exporting glb " + $DecoraOptimizedProdutcs.children[nd].name)
 	
-		Output_Path = pathConfig.appendPath (pathConfig.appendPath (pathConfig.removePathLeaf scene_path) "glbs") ($DecoraOptimizedProdutcs.children[nd].name + ".glb") -- Destination folder.
+		local output_Path = pathConfig.appendPath (pathConfig.appendPath maxfilepath "glbs") ($DecoraOptimizedProdutcs.children[nd].name + ".glb") -- Destination folder.
+
+        if not doesFileExist (pathConfig.appendPath maxfilepath "glbs") do makeDir (pathConfig.appendPath maxfilepath "glbs")
 
 		Assembly = dotNetClass "System.Reflection.Assembly"
 		-- UPDATE YOUR PATH TO BABYLON DLL
@@ -1311,11 +1329,12 @@ fn update_bake_materials = (
 		update_log ("DONE")
 		nd += 1
 	)
+	close glb_data_file
 	print "DONE"
 )
 
 fn open_scene = (
-    global scene_path =  @"C:/teste/teste_babylon/64ac3a0ea08cef00086a7dba_MAXSCRIPT_SCENE_JOB_1689020845/212602_working.max"
+    --global scene_path =  @"C:/teste/teste_babylon/64ac3a0ea08cef00086a7dba_MAXSCRIPT_SCENE_JOB_1689020845/212602_working.max"
 
     loadMaxFile scene_path quiet:true
     update_log ("scene open")
@@ -1333,7 +1352,7 @@ fn open_scene = (
 -- open_scene()
 -- AttachSceneMeshes = AttachSceneMeshes()
 -- AttachSceneMeshes.fix_attach_meshs()
-update_bake_materials()
+update_bake_materials_and_export()
 --
 -- curTexPath como um path global preenchida pelo python no init
 -- scene_path como um path global preenchida pelo python no init
