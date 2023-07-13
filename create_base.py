@@ -15,8 +15,8 @@ class base:
         self.send_to_file(self, function_array)
 # https://static-files-prod.s3.sa-east-1.amazonaws.com/teste-babylon/301069834.glb
 
-    def import_mesh(self, url):
-        cmd = f'\n\tawait BABYLON.SceneLoader.AppendAsync(\"{url}\", undefined, scene, undefined, \".glb\");'
+    def import_mesh(self, url, x, y, z):
+        cmd = f'\n\tobj = await BABYLON.SceneLoader.AppendAsync(\"{url}\", undefined, scene, undefined, \".glb\");\n\t obj.position.x = {x};\n\t obj.position.x = {y};\n\t obj.position.x = {z};'
         return cmd
     
     def create_default_skybox(self, url):
