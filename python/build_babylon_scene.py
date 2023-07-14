@@ -55,13 +55,40 @@ def create_block(block_path, block_place):
         block_file.write(block_content)
         block_file.close()
 
+def get_block_content(block_path):
+    with open(block_path, 'r') as f:
+        block_content = f.read()
+    f.close()
+    return block_content
+
+def create_babylon_engine_setup(function_list, output_path):
+    final_js = ""
+    final_js += get_block_content("./blocks/babylon_structure/babylon_engine_setup_vars.js")
+    for func in function_list:
+        final_js += get_block_content(func)
+    final_js += get_block_content("./blocks/babylon_structure/babylon_engine_setup_head.js")
+    final_js += get_block_content("./blocks/babylon_structure/babylon_engine_setup_tail.js")
+
+    with open(output_path, 'w') as f:
+        f.write(final_js)
+
 def init_java_build():
     base_folder_path = os.path.join(base_dir, scene_id)
     
     create_folder_structure(base_folder_path)
 
-    create_block(os.path.join(base_dir, "blocks\index.html"), os.path.join(base_folder_path, "index.html") )
+    js_path = os.path.join(base_folder_path, "js")
 
+    function_list = [
+        "blocks/functions/function_create_environment.js",
+        "blocks/functions/function_load_glb.js",
+        "blocks/functions/function_make_mesh_selectable.js"
+    ]
+
+    create_block(os.path.join(base_dir, "blocks\index.html"), os.path.join(base_folder_path, "index.html") )
+    create_block(os.path.join(base_dir, "blocks\\babylon_structure\\init_babylon.js"), os.path.join(js_path, "init_babylon.js") )
+    create_babylon_engine_setup(function_list, os.path.join(js_path, "babylon_engine_setup_head.js"))
+    #create_block(os.path.join(base_dir, "blocks\\babylon_structure\\babylon_engine_setup_head.js"), os.path.join(js_path, "babylon_engine_setup_head.js") )
     block_list = [
 
     ]

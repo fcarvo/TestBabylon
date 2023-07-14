@@ -14,11 +14,11 @@ var carrouselOb2;
 var carrouselOb3;
 
 var isMobile;
-
+/*
 function restore_original_materials(scene) {
   scene.sku.forEach((mesh) => (mesh.material = mesh.original_material));
-}
-
+}*/
+/*
 function remove_debug_assets(scene, canvas) {
   let cameras_2D = scene.cameras.filter(
     (mesh) => mesh.name === "view_2D_camera"
@@ -40,8 +40,8 @@ function remove_debug_assets(scene, canvas) {
 
   scene.view_mode.mode = "3D";
   scene.view_mode.map = "complete";
-}
-
+}*/
+/*
 function create_player(scene) {
   var player = BABYLON.MeshBuilder.CreateSphere(
     "player",
@@ -60,7 +60,7 @@ function create_player(scene) {
   player.isVisible = false;
 
   scene.player = player;
-}
+}*/
 
 function create_scene_camera_fp(scene, canvas) {
   var camera = new BABYLON.FreeCamera(
@@ -87,7 +87,7 @@ function create_scene_camera_fp(scene, canvas) {
   scene.activeCamera = camera;
   scene.activeCamera.name = "C1";
 }
-
+/*
 function create_scene_camera_viewer(scene) {
   scene.cameras.forEach((cam) => cam.dispose());
 
@@ -105,8 +105,8 @@ function create_scene_camera_viewer(scene) {
   // Rotaciona a camera para ver o modelo de frente e levemente de perspectiva. OBS: Alpha e Beta sao os eixos de rotacao X e Y.
   scene.activeCamera.alpha += Math.PI;
   scene.activeCamera.beta -= 0.25;
-}
-
+}*/
+/*
 function create_solid_color_material(scene) {
   let solid_color_material = new BABYLON.PBRMaterial("isolate_texture", scene);
   solid_color_material.metallic = 0;
@@ -114,8 +114,8 @@ function create_solid_color_material(scene) {
   solid_color_material.transparencyMode = 0;
   solid_color_material.albedoColor = new BABYLON.Color3(0.5, 0.5, 0.5);
   return solid_color_material;
-}
-
+}*/
+/*
 function update_environment(scene, img_env_thumb) {
   img_env_thumb.source = scene.env_uris[scene.env_idx].thumb;
 
@@ -132,16 +132,16 @@ function update_environment(scene, img_env_thumb) {
   );
   scene.createDefaultSkybox(environment, true, 1000, scene.env_blur);
   scene.environmentTexture = environment;
-}
-
-function set_outline(enable_outline, meshes) {
+}*/
+//CRIA UMA LINHA EM VOLTA DA MESH
+/*function set_outline(enable_outline, meshes) {
   meshes.forEach((mesh) => {
     mesh.outlineWidth = 0.006;
     mesh.outlineColor = BABYLON.Color3.Green();
     mesh.renderOutline = enable_outline;
   });
-}
-
+}*/
+/*
 function clickout_clean_product_selection(scene, canvas) {
   if (!over_ui) {
     canvas.addEventListener("click", function () {
@@ -156,13 +156,13 @@ function clickout_clean_product_selection(scene, canvas) {
       }
     });
   }
-}
-
+}*/
+/*
 function changeMainImage(product) {
   var mainImage = mainScene.info_tab.getChildByName("Image");
   mainImage.source = product.mainImage || product.source;
-}
-
+}*/
+/*
 function checkVisibility() {
   var left = mainScene.info_tab.getChildByName("btn_left");
   var right = mainScene.info_tab.getChildByName("btn_right");
@@ -371,7 +371,7 @@ function formatRawAndFirstCarrousel(main) {
 
   formatCarrousel();
   checkVisibility();
-}
+}*/
 
 function make_mesh_selectable(
   scene,
@@ -421,7 +421,7 @@ function make_mesh_selectable(
     )
   );
 }
-
+//ENTRA COM O ARRAY DE MESH
 function load_glb(
   scene,
   canvas,
@@ -493,6 +493,7 @@ function load_glb(
   );
 }
 
+//ENVIRONMENT
 function create_env(scene) {
   scene.env_blur = 0.2;
 
@@ -515,7 +516,7 @@ async function enable_ui(){
 });
 */
 
-function open_info_tab(scene) {
+/*function open_info_tab(scene) {
   if (scene.info_tab_open) {
     if (isMobile) {
       if (window.innerWidth <= window.innerHeight) {
@@ -541,9 +542,9 @@ function open_info_tab(scene) {
     scene.info_tab.isVisible = true;
     scene.info_tab_open = true;
   }
-}
-
-function player_move_vecs(scene){
+}*/
+//MOVIMENT
+/*function player_move_vecs(scene){
     var cam = scene.activeCamera;
     var player = scene.player;
 
@@ -604,7 +605,10 @@ function player_move_vecs(scene){
 
         drag = false;
     };
-}
+}*/
+/*
+
+// MOVE ON CLICK
 function move_camera_click(player) {
   if (player.distVec > 0) {
     player.distVec -= 0.1;
@@ -616,10 +620,11 @@ function move_camera_click(player) {
 
   player.moveWithCollisions(player.speed);
 }
+*/
 
-export const setupScene = async function (scene, canvas, mainsSku) 
-{
-  mainSkuList = mainsSku;
+
+export const setupScene = async function (scene, canvas) {
+  /*mainSkuList = mainsSku;*/
   mainScene = scene;
   mainCanvas = canvas;
 
@@ -648,7 +653,7 @@ export const setupScene = async function (scene, canvas, mainsSku)
   let scene_uri = "./resources/scene/";
 
   // importa glb da estrutura da cena
-  let teste = await load_glb(
+  /*let teste = await load_glb(
     scene,
     canvas,
     scene_uri,
@@ -657,10 +662,10 @@ export const setupScene = async function (scene, canvas, mainsSku)
     [0, 0, 0, 0],
     [-1, 1, 1],
     scene.scene_structure
-  );
+  );*/
 
   // Array para importar os produtos da cena
-  for (var i = 0; i < mainsSku.length; i++) {
+  /*for (var i = 0; i < mainsSku.length; i++) {
     await load_glb(
       scene,
       canvas,
@@ -674,12 +679,14 @@ export const setupScene = async function (scene, canvas, mainsSku)
       mainsSku[i].sku,
       mainsSku[i].isMain
     );
-  }
+  }*/
 
   //create_player(scene);
   create_scene_camera_fp(scene, canvas);
   // await enable_ui();
+/*
 
+//MAIN UI|||||||||||||||||||||||||||||||||||||||||||
   let advancedTexture =
     BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
@@ -691,6 +698,7 @@ export const setupScene = async function (scene, canvas, mainsSku)
   panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
   advancedTexture.addControl(panel);
 
+  //LAYOUT DO MENU
   await advancedTexture.parseFromURLAsync("./resources/ui_poc_vivo.json");
 
   scene.main_ui = advancedTexture.getChildren()[0];
@@ -701,6 +709,7 @@ export const setupScene = async function (scene, canvas, mainsSku)
   scene.info_tab.isVisible = false;
   scene.btn_open_info.isVisible = false;
 
+   //ALINHAMENTO DO BOTAO
   if (isMobile) {
     if (window.innerWidth <= window.innerHeight) {
       scene.btn_open_info.left = "43%";
@@ -714,13 +723,12 @@ export const setupScene = async function (scene, canvas, mainsSku)
   } else {
     scene.info_tab.left = "36%";
   }
-
+  //DISPLAY MENU
   scene.overlayer_display = scene.main_ui.getChildByName("overlayer_display");
   scene.overlayer_display.isVisible = false;
 
   scene.qr_code_image = scene.main_ui.getChildByName("qr_code_image");
   scene.qr_code_image.isVisible = false;
-
   // Evento para abrir o qr
   var ar_qr = scene.info_tab.getChildByName("ar_qr");
   ar_qr.onPointerUpObservable.add(function (evt) {
@@ -733,7 +741,6 @@ export const setupScene = async function (scene, canvas, mainsSku)
       scene.qr_code_image.isVisible = false;
     }
   });
-
   // Evento para esconder o qr
   scene.overlayer_display.onPointerUpObservable.add(function (evt) {
     scene.overlayer_display.isVisible = false;
@@ -743,6 +750,7 @@ export const setupScene = async function (scene, canvas, mainsSku)
   scene.btn_open_info.onPointerUpObservable.add(function (evt) {
     open_info_tab(scene);
   });
+*/
 
    //player_move_vecs(scene);
 
@@ -755,8 +763,8 @@ export const scaleUi = (canvas) => {
   setTimeout(() => {
     mainTexture.scaleTo(canvas.width, canvas.height);
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       mainTexture.scaleTo(canvas.width, canvas.height);
-    }, 100);
+    }, 100);*/
   }, 0);
 };

@@ -2,7 +2,7 @@ var canvas = document.getElementById("renderCanvas");
 var engine;
 var scene;
 
-BABYLON.ArcRotateCamera.prototype.spinTo = function (whichprop, targetval, speed, onEnd) {
+/*BABYLON.ArcRotateCamera.prototype.spinTo = function (whichprop, targetval, speed, onEnd) {
 	var ease = new BABYLON.CubicEase();
 	ease.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
 
@@ -32,12 +32,11 @@ BABYLON.Camera.prototype.aniLockedTarget = function (targetPos, cameraPos) {
 BABYLON.Camera.prototype.makeLine = function (root, start, finish) {
     var end = finish.clone();
 	BABYLON.Animation.CreateAndStartAnimation('cam', root, 'position', 30, 120, start, end, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-}
+}*/
 
 //var apiToken = '5f04776ec4ac713ee56af8bc5f04776ec4ac713ee56af8bd';
 
-//ARRAY DE TROCA
-
+/*
 var samsungPhones = [{
     mainImage: "./resources/glb/mockup/Wood2.jpg",
     sku: "Smartphones_VDS_01",
@@ -101,7 +100,7 @@ var mainsSku = [
 	  return samsungPhone
   })(samsungPhonesOrig[2], samsungPhones),
 ];
-//|||||||||||||||||||||||||||||||||||||||||||||||
+*/
 
 var validNavigator = (window && window.navigator) || navigator;
 var userAgent = validNavigator.userAgent;
@@ -144,48 +143,49 @@ var initScene = async function () {
   scene = new BABYLON.Scene(engine);
   new BABYLON.HighlightLayer("customHighLight", scene);
 
-  setupScene(scene, canvas, mainsSku);
+  setupScene(scene, canvas);
   //scene.debugLayer.show(); canvas.style.width = `70vw`;
   startRenderLoop(engine, scene, canvas);
-
+/*
   var orientationCamera = new BABYLON.DeviceOrientationCamera("orientationCamera", new BABYLON.Vector3(0, 1, 0), scene);
 
-  orientationCamera.setEnabled(false);
+  orientationCamera.setEnabled(false);*/
 
+//|| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA ||
+/*
   var arcCamera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, 0), scene);
   arcCamera.attachControl(canvas, true);
   scene.arcCamera = arcCamera;
-  console.log(scene.arcCamera);
+  console.log(scene.arcCamera);*/
+//|| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA |||| CAMERA ||
 
-  scene.onReadyObservable.add(function () 
+  scene.onReadyObservable.add(function () {
+    console.log(scene.meshes.length);
+
+	if(window.isMobile)
 	{
-		console.log(scene.meshes.length);
+		var camera = scene.activeCamera;
+		orientationCamera.setEnabled(true);
+		scene.activeCamera.detachControl();
+		scene.activeCamera = orientationCamera;
+		scene.activeCamera.position = camera.position;
+		scene.activeCamera.setTarget(camera.getTarget());
 
-		if(window.isMobile)
-		{
-			var camera = scene.activeCamera;
-			orientationCamera.setEnabled(true);
-			scene.activeCamera.detachControl();
-			scene.activeCamera = orientationCamera;
-			scene.activeCamera.position = camera.position;
-			scene.activeCamera.setTarget(camera.getTarget());
+		orientationCamera.cameraRotation.x = 0;
+		orientationCamera.cameraRotation.y = 0;
+		scene.activeCamera.attachControl(canvas, true);
 
-			orientationCamera.cameraRotation.x = 0;
-			orientationCamera.cameraRotation.y = 0;
-			scene.activeCamera.attachControl(canvas, true);
-
-			orientationCamera.keysUp = [-1];
-			orientationCamera.keysDown = [-1];
-			orientationCamera.keysLeft = [-1];
-			orientationCamera.keysRight = [-1];
-			orientationCamera.inertia = 0.2;
-			orientationCamera.fov = 0.8;
-			orientationCamera.minZ = 0;
-			orientationCamera.angularSensibility = 400;
-			orientationCamera.speed = 1;
-		}
+		orientationCamera.keysUp = [-1];
+		orientationCamera.keysDown = [-1];
+		orientationCamera.keysLeft = [-1];
+		orientationCamera.keysRight = [-1];
+		orientationCamera.inertia = 0.2;
+		orientationCamera.fov = 0.8;
+		orientationCamera.minZ = 0;
+		orientationCamera.angularSensibility = 400;
+		orientationCamera.speed = 1;
 	}
-  );
+  });
 
   createResizeObeserver();
 
@@ -257,9 +257,9 @@ var initScene = async function () {
 
   };
 
-  var arcCamera360 = new BABYLON.ArcRotateCamera("Camera", 1.2, 1.2, 0.3, scene.prevTarget, scene);
-
-  document.getElementById('view360').addEventListener('click', toggleAutoBehaviour);
+  //var arcCamera360 = new BABYLON.ArcRotateCamera("Camera", 1.2, 1.2, 0.3, scene.prevTarget, scene);
+/*
+  document.getElementById('view360').addEventListener('click', toggleAutoBehaviour);*/
 
   window.scene = scene;
 };

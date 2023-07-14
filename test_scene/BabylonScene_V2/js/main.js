@@ -1,3 +1,4 @@
+/*
 var canvas = document.getElementById("renderCanvas");
 
 var startRenderLoop = function (engine, canvas) {
@@ -23,7 +24,9 @@ Math.degrees = function (radians) {
     return radians * 180 / Math.PI;
 };
 
-/* Cedric https://forum.babylonjs.com/t/rotate-mesh-with-camera-attached-to-bone/23601/14?u=naznarok */
+*/
+/* Cedric https://forum.babylonjs.com/t/rotate-mesh-with-camera-attached-to-bone/23601/14?u=naznarok *//*
+
 var mouseMove = function (e) {
     deltaTime = engine.getDeltaTime();
 
@@ -99,8 +102,10 @@ var delayCreateScene = function () {
     mat1.specularColor = BABYLON.Color3.Black();
     mat1.emissiveColor = BABYLON.Color3.White();
 
-    /*  Box material
-        2DO: material (instance) https://forum.babylonjs.com/t/shader-material-doesnt-work-with-instances/793/14 */
+    */
+/*  Box material
+        2DO: material (instance) https://forum.babylonjs.com/t/shader-material-doesnt-work-with-instances/793/14 *//*
+
     var mat2 = new BABYLON.StandardMaterial("mat0", scene);
     mat2.diffuseTexture = new BABYLON.Texture("https://i.imgur.com/HADnUQr.png", scene);
     mat2.specularColor = BABYLON.Color3.Black();
@@ -226,7 +231,9 @@ var delayCreateScene = function () {
 
         });
 
-        /* https://www.babylonjs-playground.com/#1RHSYU#1 */
+        */
+/* https://www.babylonjs-playground.com/#1RHSYU#1 *//*
+
         fpsMesh.update = function () {
 
             //2DO: remove this by updating model in blender
@@ -339,3 +346,4 @@ window.initFunction = async function() {
 
 initFunction().then(() => {sceneToRender = scene
 });
+*/

@@ -1,1 +1,0 @@
-await BABYLON.SceneLoader.AppendAsync("{}", undefined, scene, undefined, ".glb");
